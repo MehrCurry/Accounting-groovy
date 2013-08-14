@@ -15,7 +15,7 @@ class EntryTests {
         def account=new Account("JUnit",EUR)
         assert account.balance() == Money.euros(0)
 
-        def entry=new Entry(account: account, amount:Money.euros(10))
+        def entry=new Entry(account, Money.euros(10),new Posting())
 
         entry.post();
         assert account.balance() == Money.euros(10)

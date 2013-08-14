@@ -12,11 +12,11 @@ class PostingTests {
 
     void testSomething() {
         def account=new Account(this.class.getSimpleName(),Account.EUR)
-        def trans=new Posting();
+        def trans=new Posting(memo:"Bla");
         assert trans.canPost() == false
-        assert trans.credit(Money.euros(10),account,"Buchung 1").canPost() == false
-        assert trans.credit(Money.euros(20),account,"Buchung 2").canPost() == false
-        assert trans.debit(Money.euros(30),account,"Buchung 3").canPost() == true
+        assert trans.credit(Money.euros(10),account).canPost() == false
+        assert trans.credit(Money.euros(20),account).canPost() == false
+        assert trans.debit(Money.euros(30),account).canPost() == true
 
         assert trans.isPosted() == false
         trans.post()
@@ -28,9 +28,9 @@ class PostingTests {
 
     void testUnbalancedPostingShouldFail() {
         def account=new Account(this.class.getSimpleName(),Account.EUR)
-        def trans=new Posting();
-        trans.credit(Money.euros(10),account,"Buchung 1")
-                .debit(Money.euros(20),account,"Buchung 2")
+        def trans=new Posting(memo: "Hurz");
+        trans.credit(Money.euros(10),account)
+                .debit(Money.euros(20),account)
         shouldFail { trans.post()}
     }
 }

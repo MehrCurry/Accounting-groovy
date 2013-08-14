@@ -13,9 +13,9 @@ class Posting {
     static constraints = {
     }
 
-    private add(Money amount, Account account, String text) {
+    private add(Money amount, Account account) {
         assertNotPosted();
-        addToEntries (new Entry(account, text, amount))
+        addToEntries (new Entry(account, amount, this))
     }
 
     private void assertCanPost() {
@@ -55,18 +55,18 @@ class Posting {
     }
 
     def inverse(aDate) {
-        def trans = new Posting(date:d)
-        entries.each { trans.add(new Entry(it.account, "Storno: $it.text",it.amount.negate())) }
+        def trans = new Posting(date:d,memo: "Storno: $memo")
+        entries.each { trans.add(new Entry(it.account, it.amount.negate())) }
         trans;
     }
 
-    def credit(Money amount, Account account, String text) {
-        add(amount,account,text)
+    def credit(Money amount, Account account) {
+        add(amount,account)
         this
     }
 
-    def debit(Money amount, Account account, String text) {
-        add(amount.negate(),account,text)
+    def debit(Money amount, Account account) {
+        add(amount.negate(),account)
         this
     }
 }
