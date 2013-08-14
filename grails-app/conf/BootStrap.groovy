@@ -14,7 +14,8 @@ class BootStrap {
         [a1,a2,a3].each { it.save() }
 
         def posting = new Posting(memo:"Hurz");
-        posting.credit(Money.euros(10),a1).credit(Money.euros(20),a2).debit(Money.euros(30),a3).post()
+        def euros10 = Money.euros(10)
+        posting.credit(euros10,a1).credit(Money.euros(20),a2).debit(Money.euros(30),a3).post()
         [a1,a2,a3,posting].each { it.save() }
 
         def s=new SummaryAccount("4000",DetailAccount.EUR)
