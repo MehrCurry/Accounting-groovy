@@ -1,6 +1,5 @@
 package accounting
 
-import de.gzockoll.types.money.Money
 import org.apache.commons.logging.LogFactory
 import org.junit.After
 import org.junit.Before
@@ -21,12 +20,7 @@ class AccountTests {
     @Test
     public void testAccount() {
         def account=new Account(name:"JUNIT",currency: Account.EUR)
-        def entry=new Entry(account: account, amount: Money.euros(10));
-        entry.post()
-        assert account.balance() == Money.euros(10)
         account.save()
-        log.debug "Balance:" + account.balance()
-        // Account.findAll().each { println "$it.name($it.id): $it.balance()" }
-        assert Entry.findAll().size() == 1
+        assert Account.findAll().size() == 1
     }
 }

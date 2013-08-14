@@ -1,4 +1,6 @@
 import de.gzockoll.types.money.Money
+import persistance.CurrencyUserType
+import persistance.MoneyUserType
 
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
@@ -60,6 +62,7 @@ grails.exceptionresolver.params.exclude = ['password']
 
 grails.gorm.default.mapping = {
     "user-type" type: MoneyUserType, class:Money
+    "user-type" type: CurrencyUserType, class:com.ibm.icu.util.Currency
 }
 
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')

@@ -1,9 +1,10 @@
 package accounting
 
 import de.gzockoll.types.money.Money
+import org.joda.time.DateTime
 
 class Posting {
-    Date date
+    final DateTime whenCreated=DateTime.now()
     String memo
     boolean posted=false
 
@@ -13,9 +14,9 @@ class Posting {
     static constraints = {
     }
 
-    private add(Money amount, Account account) {
+    private add(Money amount, Account account, mode) {
         assertNotPosted();
-        addToEntries (new Entry(account, amount, this))
+        addToEntries (new Entry(account, amount, this,mode))
     }
 
     private void assertCanPost() {
@@ -61,12 +62,12 @@ class Posting {
     }
 
     def credit(Money amount, Account account) {
-        add(amount,account)
+        add(amount,account,Entry.Mode.CREDIT)
         this
     }
 
     def debit(Money amount, Account account) {
-        add(amount.negate(),account)
+        add(amount.negate(),account,Entry.Mode.DEBIT)
         this
     }
 }

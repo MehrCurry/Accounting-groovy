@@ -1,4 +1,6 @@
 import de.gzockoll.types.money.Money
+import persistance.MoneyUserType
+
 /**
  * Created with IntelliJ IDEA.
  * User: Guido Zockoll

@@ -1,19 +1,25 @@
 package accounting
 import de.gzockoll.types.money.Money
+import persistance.MoneyUserType
 
 class Entry {
-    // DateTime whenCharged
-    // DateTime whenBooked=DateTime.now()
     Money amount
+    Mode mode
 
     static belongsTo = [account:Account, posting:Posting]
 
-    static embedded = ['amount']
+    static mapping = {
+        amount type: MoneyUserType, {
+            column name: "amount"
+            column name: "currency", sqlType: "char", length: 3
+        }
+    }
 
-    Entry(Account account, Money amount, Posting posting) {
+    Entry(Account account, Money amount, Posting posting, Mode mode) {
         this.account = account
         this.amount = amount
         this.posting = posting
+        this.mode = mode
     }
 
     def post() {
@@ -22,8 +28,11 @@ class Entry {
     }
 
     static constraints = {
-        account isBlank: false
-        amount isBlank: false
-        posting isBlank: false
+        account blank: false
+        amount blank: false
+        posting blank: false
+    }
+    static enum Mode {
+        CREDIT,DEBIT
     }
 }
