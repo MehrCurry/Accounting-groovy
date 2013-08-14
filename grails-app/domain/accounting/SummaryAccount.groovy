@@ -2,7 +2,7 @@ package accounting
 import com.ibm.icu.util.Currency as Currency
 import de.gzockoll.types.money.Money
 
-class SummaryAccount implements Account {
+class SummaryAccount extends Account {
     Set accounts = []
     Currency currency
     String name
@@ -16,13 +16,13 @@ class SummaryAccount implements Account {
         this.currency=currency
     }
 
-    def addAccount(DetailAccount a) {
+    def addAccount(Account a) {
         assert currency == a.currency
         addToAccounts(a);
     }
 
     Money balance() {
-        accounts.collect(it.balance()).sum()
+        accounts.collect {it.balance()}.sum()
     }
 
 

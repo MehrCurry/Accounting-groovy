@@ -1,9 +1,8 @@
 package accounting
-
-import de.gzockoll.types.money.Money
 import com.ibm.icu.util.Currency as Currency
+import de.gzockoll.types.money.Money
 
-class DetailAccount implements Account {
+class DetailAccount extends Account {
     static final EUR=Currency.getInstance("EUR")
     String name
     Currency currency
@@ -20,6 +19,7 @@ class DetailAccount implements Account {
         this.name = name
         this.currency = currency
     }
+
 
     void post(Entry entry) {
         assert entry.amount.currency == currency

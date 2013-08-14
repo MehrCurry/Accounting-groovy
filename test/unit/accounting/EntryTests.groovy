@@ -20,4 +20,11 @@ class EntryTests {
         entry.post();
         assert account.balance() == Money.euros(10)
     }
+
+    void testNegateMode() {
+        assert Entry.Mode.CREDIT.negate() == Entry.Mode.DEBIT
+        assert Entry.Mode.DEBIT.negate() == Entry.Mode.CREDIT
+        assert Entry.Mode.CREDIT.negate().negate() == Entry.Mode.CREDIT
+        assert Entry.Mode.DEBIT.negate().negate() == Entry.Mode.DEBIT
+    }
 }

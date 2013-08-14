@@ -56,8 +56,8 @@ class Posting {
     }
 
     def inverse(aDate) {
-        def trans = new Posting(date:d,memo: "Storno: $memo")
-        entries.each { trans.add(new Entry(it.account, it.amount.negate())) }
+        def trans = new Posting(date:aDate,memo: "Storno: $memo")
+        entries.each { trans.add(it.amount.negate(),it.account,it.mode.negate()) }
         trans;
     }
 
