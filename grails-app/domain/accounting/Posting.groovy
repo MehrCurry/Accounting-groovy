@@ -4,7 +4,8 @@ import de.gzockoll.types.money.Money
 import org.joda.time.DateTime
 
 class Posting {
-    final DateTime whenCreated=DateTime.now()
+    DateTime whenCreated=DateTime.now()
+    DateTime whenPosted
     String memo
     boolean posted=false
 
@@ -15,14 +16,10 @@ class Posting {
     }
 
     private add(Money amount, DetailAccount account, mode) {
-        assertNotPosted();
+        assert !posted
         addToEntries (new Entry(account, amount, this,mode))
     }
 
-    private void assertCanPost() {
-        if (!canPost())
-            throw new IllegalStateException("balance must be zero");
-    }
 
     boolean canPost() {
         return hasEntries() && isBalanced()
@@ -41,15 +38,11 @@ class Posting {
         entries.collect{it.amount}.sum()
     }
 
-    def assertNotPosted() {
-        if (posted)
-            throw new IllegalStateException("Posting has been posted already!");
-    }
 
     def post() {
-        assertNotPosted()
-        assertCanPost()
-        // AuditLog.post("transaction.post",this);
+        assert !posted
+        assert canPost()
+        whenPosted=DateTime.now()
         entries.each { it.post() }
         posted = true
         this

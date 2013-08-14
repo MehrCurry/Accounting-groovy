@@ -44,6 +44,7 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.22' ..
         compile (group:'de.gzockoll', name: 'money', version:'[0.1.2-SNAPSHOT,)') { changing:true }
         compile 'com.ibm.icu:icu4j:51.2'
+        compile "org.jadira.usertype:usertype.jodatime:1.9"
     }
 
     plugins {
