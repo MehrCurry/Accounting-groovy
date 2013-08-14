@@ -6,7 +6,7 @@ class Entry {
     Money amount
     Mode mode
 
-    static belongsTo = [account:Account, posting:Posting]
+    static belongsTo = [account:DetailAccount, posting:Posting]
 
     static mapping = {
         amount type: MoneyUserType, {
@@ -15,7 +15,7 @@ class Entry {
         }
     }
 
-    Entry(Account account, Money amount, Posting posting, Mode mode) {
+    Entry(DetailAccount account, Money amount, Posting posting, Mode mode) {
         this.account = account
         this.amount = amount
         this.posting = posting
@@ -24,7 +24,7 @@ class Entry {
 
     def post() {
         assert validate()
-        account.add(this)
+        account.post(this)
     }
 
     static constraints = {

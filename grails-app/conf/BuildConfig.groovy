@@ -31,7 +31,7 @@ grails.project.dependency.resolution = {
         mavenLocal()
         mavenCentral()
 
-        // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
+        // uncomment these (or post new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -51,7 +51,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.8.3"
         runtime ":resources:1.1.6"
 
-        // Uncomment these (or add new ones) to enable additional resources capabilities
+        // Uncomment these (or post new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
         //runtime ":yui-minify-resources:0.1.5"

@@ -1,4 +1,5 @@
-import accounting.Account
+import accounting.DetailAccount
+import accounting.DetailAccount
 import accounting.Entry
 import accounting.Posting
 import de.gzockoll.types.money.Money
@@ -6,9 +7,9 @@ import de.gzockoll.types.money.Money
 class BootStrap {
 
     def init = { servletContext ->
-        def a1=new Account("0000",Account.EUR)
-        def a2=new Account("0001",Account.EUR)
-        def a3=new Account("0002",Account.EUR)
+        def a1=new DetailAccount("0000",DetailAccount.EUR)
+        def a2=new DetailAccount("0001",DetailAccount.EUR)
+        def a3=new DetailAccount("0002",DetailAccount.EUR)
         [a1,a2,a3].each { it.save() }
 
         def posting = new Posting(memo:"Hurz");

@@ -14,7 +14,7 @@ class Posting {
     static constraints = {
     }
 
-    private add(Money amount, Account account, mode) {
+    private add(Money amount, DetailAccount account, mode) {
         assertNotPosted();
         addToEntries (new Entry(account, amount, this,mode))
     }
@@ -49,7 +49,7 @@ class Posting {
     def post() {
         assertNotPosted()
         assertCanPost()
-        // AuditLog.add("transaction.post",this);
+        // AuditLog.post("transaction.post",this);
         entries.each { it.post() }
         posted = true
         this
@@ -61,12 +61,12 @@ class Posting {
         trans;
     }
 
-    def credit(Money amount, Account account) {
+    def credit(Money amount, DetailAccount account) {
         add(amount,account,Entry.Mode.CREDIT)
         this
     }
 
-    def debit(Money amount, Account account) {
+    def debit(Money amount, DetailAccount account) {
         add(amount.negate(),account,Entry.Mode.DEBIT)
         this
     }

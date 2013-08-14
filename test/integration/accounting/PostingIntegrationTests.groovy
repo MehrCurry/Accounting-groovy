@@ -1,11 +1,10 @@
 package accounting
-
 import de.gzockoll.types.money.Money
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 
-import static org.junit.Assert.*
-import org.junit.*
-
-class PostingTests {
+class PostingIntegrationTests {
 
     @Before
     void setUp() {
@@ -19,11 +18,11 @@ class PostingTests {
 
     @Test
     void testSomething() {
-        def a1=new Account("Account 1",Account.EUR)
+        def a1=new DetailAccount("DetailAccount 1",DetailAccount.EUR)
         a1.save()
-        def a2=new Account("Account 2",Account.EUR)
+        def a2=new DetailAccount("DetailAccount 2",DetailAccount.EUR)
         a2.save()
-        def a3=new Account("Account 3",Account.EUR)
+        def a3=new DetailAccount("DetailAccount 3",DetailAccount.EUR)
         a3.save()
 
         def posting = new Posting().credit(Money.euros(10),a1)

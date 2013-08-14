@@ -5,7 +5,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class AccountTests {
+class DetailAccountIntegrationTests {
     static log = LogFactory.getLog(this)
     @Before
     void setUp() {
@@ -19,8 +19,8 @@ class AccountTests {
 
     @Test
     public void testAccount() {
-        def account=new Account(name:"JUNIT",currency: Account.EUR)
+        def account=new DetailAccount(name:"JUNIT",currency: DetailAccount.EUR)
         account.save()
-        assert Account.findAll().size() == 1
+        assert DetailAccount.findAll().size() == 1
     }
 }

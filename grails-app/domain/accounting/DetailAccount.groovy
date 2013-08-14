@@ -3,7 +3,7 @@ package accounting
 import de.gzockoll.types.money.Money
 import com.ibm.icu.util.Currency as Currency
 
-class Account {
+class DetailAccount implements Account {
     static final EUR=Currency.getInstance("EUR")
     String name
     Currency currency
@@ -16,19 +16,28 @@ class Account {
             currency(inList: [Currency.getInstance("EUR"),Currency.getInstance("USD")])
         }
 
-    Account(name, currency) {
+    DetailAccount(name, currency) {
         this.name = name
         this.currency = currency
     }
 
-    def add(Entry entry) {
+    void post(Entry entry) {
+        assert entry.amount.currency == currency
         this.validate()
         entries.add entry
     }
 
-    def balance() {
+    Money balance() {
         this.validate()
         final zero = Money.fromMinor(0, currency)
         entries.collect { it.amount }.sum(zero)
+    }
+
+    Money balance(Entry.Mode mode) {
+        this.validate()
+        final zero = Money.fromMinor(0, currency)
+        def balance=entries.findAll { it.mode == mode}.collect {entry -> entry.amount }.sum(zero)
+
+        mode == Entry.Mode.CREDIT ? balance : balance.negate()
     }
 }
