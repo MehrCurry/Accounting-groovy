@@ -19,7 +19,8 @@ abstract class Account {
     abstract void post(Entry entry)
     abstract Money balance()
     abstract Currency getCurrency()
-    String getName() {
-        parent!=null ? "$parent.name:$name" : name
+    String canonicalName() {
+        def cn=parent?.canonicalName()
+        parent!=null ? "$cn:$name" : name
     }
 }

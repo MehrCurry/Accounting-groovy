@@ -22,7 +22,7 @@ class BootStrap {
         s.save()
         [a1,a2,a3].each { s.addAccount(it)}
         s.save()
-        [a1,a2,a3].each { println it.name }
+        [a1,a2,a3].each { println it.canonicalName() }
 
         posting.inverse().post().save()
     }
