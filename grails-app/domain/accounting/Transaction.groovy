@@ -28,7 +28,7 @@ class Transaction {
 
     def balance() {
         assert entries != null
-        entries.sum()
+        entries.collect{it.amount}.sum()
     }
 
     def assertNotPosted() {
