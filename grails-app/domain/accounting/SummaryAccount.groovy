@@ -1,4 +1,5 @@
 package accounting
+
 import com.ibm.icu.util.Currency as Currency
 import de.gzockoll.types.money.Money
 
@@ -7,7 +8,7 @@ class SummaryAccount extends Account {
     Currency currency
     String name
 
-    static hasMany = [accounts:DetailAccount]
+    static hasMany = [accounts:Account]
     static constraints = {
     }
 
