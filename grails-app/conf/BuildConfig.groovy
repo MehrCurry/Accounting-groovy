@@ -46,6 +46,7 @@ grails.project.dependency.resolution = {
         compile 'com.ibm.icu:icu4j:51.2'
         compile "org.jadira.usertype:usertype.jodatime:1.9"
         compile 'org.apache.httpcomponents:httpclient:4.2.5'
+        compile 'com.google.code.gson:gson:2.2.4'
     }
 
     plugins {

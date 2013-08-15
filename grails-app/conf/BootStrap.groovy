@@ -45,6 +45,7 @@ class BootStrap {
         postingService.post(new Posting(memo: "Rials").credit(rial,a4).debit(rial,a4))
 
         Money rialAsEuro = currencyConverterService.convert(rial,EUR)
+        currencyConverterService.convert(rial + rial,EUR)
         postingService.post(new Posting(memo: "Rial in Euro").credit(rialAsEuro,a1).debit(rialAsEuro,a2))
     }
 
