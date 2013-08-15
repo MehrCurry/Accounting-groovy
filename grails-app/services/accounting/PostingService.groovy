@@ -1,8 +1,10 @@
 package accounting
 
 class PostingService {
-    def post(Posting posting) {
-        posting.save()
-        posting.post()
+    def post(postings) {
+        postings.each { posting ->
+            posting.save()
+            posting.post()
+        }
     }
 }

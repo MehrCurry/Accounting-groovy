@@ -2,6 +2,7 @@ package accounting.groovy
 
 import de.gzockoll.types.money.Money
 import grails.test.mixin.TestFor
+import net.sf.ehcache.CacheManager
 import org.apache.commons.lang3.time.StopWatch
 
 /**
@@ -21,6 +22,7 @@ class CurrencyConverterServiceTests {
     }
 
     void testCache() {
+        def mgr=getCacheManager("exchangerates")
         def sw=new StopWatch()
         def run = {
             sw.start()
@@ -32,5 +34,9 @@ class CurrencyConverterServiceTests {
         sw.reset()
         run.call()
         assert sw.getTime() < deltaT
+    }
+
+    def getCacheManager(name) {
+        CacheManager.ALL_CACHE_MANAGERS.find { it.name.equalsIgnoreCase name}
     }
 }

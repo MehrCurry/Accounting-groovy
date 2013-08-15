@@ -42,8 +42,8 @@ class Posting {
     def post() {
         assert !isPosted()
         assert canPost()
-        whenPosted=DateTime.now()
         entries.each { it.post() }
+        whenPosted=DateTime.now()
         this
     }
 

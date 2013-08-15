@@ -5,8 +5,6 @@ import de.gzockoll.types.money.Money
 
 class SummaryAccount extends Account {
     Set accounts = []
-    Currency currency
-    String name
 
     static hasMany = [accounts:Account]
     static constraints = {

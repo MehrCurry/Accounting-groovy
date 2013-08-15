@@ -5,16 +5,12 @@ import de.gzockoll.types.money.Money
 
 class DetailAccount extends Account {
     static final EUR=Currency.getInstance("EUR")
-    String name
-    Currency currency
     Set entries = []
 
     static hasMany = [entries:Entry]
 
     static constraints = {
-        name blank: false
-            currency(inList: [Currency.getInstance("EUR"),Currency.getInstance("USD")])
-        }
+    }
 
     DetailAccount(name, currency) {
         this.name = name
