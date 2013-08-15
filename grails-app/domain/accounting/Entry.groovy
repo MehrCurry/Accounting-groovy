@@ -12,7 +12,7 @@ class Entry {
 
     static mapping = {
         amount type: MoneyUserType, {
-            column name: "amount"
+            column name: "amount", scale: 4
             column name: "currency", sqlType: "char", length: 3
         }
     }

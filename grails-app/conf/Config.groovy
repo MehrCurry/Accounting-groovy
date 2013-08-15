@@ -68,7 +68,7 @@ grails.gorm.default.mapping = {
 }
 
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
-grails.hibernate.cache.queries = false
+grails.hibernate.cache.queries = true
 
 environments {
     development {
@@ -100,5 +100,36 @@ log4j = {
 
            'net.sf.ehcache.hibernate'
 
-    debug  'org.hibernate'
+    debug  'org.hibernate',
+           'org.apache.http',
+           'grails.plugin.cache',
+           'net.sf.ehcache'
+}
+grails.cache.enabled = true
+grails.cache.config = {
+    cache {
+        name 'exchangerates'
+    }
+
+    defaultCache {
+        maxElementsInMemory 10000
+        eternal false
+        timeToIdleSeconds 120
+        timeToLiveSeconds 120
+        overflowToDisk true
+        maxElementsOnDisk 10000000
+        diskPersistent false
+        diskExpiryThreadIntervalSeconds 120
+        memoryStoreEvictionPolicy 'LRU'
+    }
+
+    //this is not a cache, it's a set of default configs to apply to other caches
+    defaults {
+        eternal false
+        overflowToDisk true
+        maxElementsInMemory 10000
+        maxElementsOnDisk 10000000
+        timeToLiveSeconds 300
+        timeToIdleSeconds 0
+    }
 }

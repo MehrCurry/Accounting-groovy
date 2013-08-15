@@ -10,15 +10,24 @@ import de.gzockoll.types.money.Money
  * To change this template use File | Settings | File Templates.
  */
 abstract class Account {
+
+    String name
+    Currency currency
+
+    Account(String name,Currency currency) {
+        this.name=name
+        this.currency=currency
+    }
+
     static belongsTo = [parent:SummaryAccount]
 
     static constraints = {
         parent nullable: true
+        currency inList: Currency.availableCurrencies.sort()
     }
 
     abstract void post(Entry entry)
     abstract Money balance()
-    abstract Currency getCurrency()
     String canonicalName() {
         def cn=parent?.canonicalName()
         parent!=null ? "$cn:$name" : name

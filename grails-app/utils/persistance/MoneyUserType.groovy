@@ -76,7 +76,7 @@ class MoneyUserType implements CompositeUserType {
 
     @Override
     Object nullSafeGet(ResultSet resultSet, String[] strings, SessionImplementor sessionImplementor, Object o) throws HibernateException, SQLException {
-        assert names.length == 2;
+        assert strings.length == 2;
         BigDecimal amount = BigDecimalType.INSTANCE.get(names[0]); // already handles null check
         def iso = StringType.INSTANCE.get(names[1])
         Currency currency = Currency.getInstance(iso); // already handles null check
@@ -90,7 +90,7 @@ class MoneyUserType implements CompositeUserType {
             StringType.INSTANCE.set(preparedStatement, null, index + 1,sessionImplementor);
         } else {
             final Money money = (Money) o;
-            BigDecimalType.INSTANCE.set(preparedStatement, money.value, index,sessionImplementor);
+            BigDecimalType.INSTANCE.set(preparedStatement, money.scaled().value, index,sessionImplementor);
             StringType.INSTANCE.set(preparedStatement, money.currency.getCurrencyCode(), index + 1,sessionImplementor);
         }
     }
