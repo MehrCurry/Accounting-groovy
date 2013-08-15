@@ -2,6 +2,7 @@ package accounting
 
 class PostingService {
     def post(Posting posting) {
-        posting.post().save()
+        posting.save()
+        posting.post()
     }
 }

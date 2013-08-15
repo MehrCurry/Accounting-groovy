@@ -45,6 +45,7 @@ grails.project.dependency.resolution = {
         compile (group:'de.gzockoll', name: 'money', version:'[0.1.2-SNAPSHOT,)') { changing:true }
         compile 'com.ibm.icu:icu4j:51.2'
         compile "org.jadira.usertype:usertype.jodatime:1.9"
+        compile 'org.apache.httpcomponents:httpclient:4.2.5'
     }
 
     plugins {
@@ -62,5 +63,6 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.3.2"
 
         compile ':cache:1.0.1'
+        compile ":cache-ehcache:1.0.0"
     }
 }

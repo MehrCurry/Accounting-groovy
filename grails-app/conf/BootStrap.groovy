@@ -29,6 +29,12 @@ class BootStrap {
 
         def p2=posting.inverse()
         postingService.post(p2)
+
+        def betrag=Money.euros(10)
+        (1..400).each { betrag = betrag * 1.03 }
+        def p3 = new Posting(memo: "Zinsen").credit(betrag, a1).debit(betrag, a2)
+        assert p3.canPost()
+        postingService.post(p3)
     }
 
     def destroy = {

@@ -102,3 +102,19 @@ log4j = {
 
     debug  'org.hibernate'
 }
+grails.cache.enabled = true
+grails.cache.config = {
+    cache {
+        name 'exchangerates'
+    }
+
+    //this is not a cache, it's a set of default configs to apply to other caches
+    defaults {
+        eternal false
+        overflowToDisk true
+        maxElementsInMemory 10000
+        maxElementsOnDisk 10000000
+        timeToLiveSeconds 300
+        timeToIdleSeconds 0
+    }
+}

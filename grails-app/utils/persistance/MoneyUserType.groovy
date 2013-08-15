@@ -90,7 +90,7 @@ class MoneyUserType implements CompositeUserType {
             StringType.INSTANCE.set(preparedStatement, null, index + 1,sessionImplementor);
         } else {
             final Money money = (Money) o;
-            BigDecimalType.INSTANCE.set(preparedStatement, money.value, index,sessionImplementor);
+            BigDecimalType.INSTANCE.set(preparedStatement, money.scaled().value, index,sessionImplementor);
             StringType.INSTANCE.set(preparedStatement, money.currency.getCurrencyCode(), index + 1,sessionImplementor);
         }
     }

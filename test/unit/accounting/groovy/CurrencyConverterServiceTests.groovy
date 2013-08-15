@@ -1,0 +1,36 @@
+package accounting.groovy
+
+import de.gzockoll.types.money.Money
+import grails.test.mixin.TestFor
+import org.apache.commons.lang3.time.StopWatch
+
+/**
+ * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
+ */
+@TestFor(CurrencyConverterService)
+class CurrencyConverterServiceTests {
+    public static final com.ibm.icu.util.Currency USD = com.ibm.icu.util.Currency.getInstance("USD")
+    CurrencyConverterService service
+    void setUp() {
+        service=new CurrencyConverterService()
+    }
+    void testConversion() {
+        def result=service.convert(Money.euros(10),USD);
+        assert result.currency == USD
+        assert result.value > 10.0
+    }
+
+    void testCache() {
+        def sw=new StopWatch()
+        def run = {
+            sw.start()
+            def rate=service.getExchangeRate("USD","EUR");
+            sw.stop()
+        }
+        run.call()
+        def deltaT = sw.getTime()
+        sw.reset()
+        run.call()
+        assert sw.getTime() < deltaT
+    }
+}

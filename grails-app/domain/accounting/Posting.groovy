@@ -7,12 +7,12 @@ class Posting {
     DateTime whenCreated=DateTime.now()
     DateTime whenPosted
     String memo
-    boolean posted=false
 
     Set entries = []
 
     static hasMany = [entries:Entry]
     static constraints = {
+        whenPosted nullable: true
     }
 
     private add(Money amount, DetailAccount account, mode) {
@@ -29,23 +29,26 @@ class Posting {
         entries.size() > 0
     }
 
-    private boolean isBalanced() {
+    boolean isBalanced() {
         balance().value == 0G
     }
 
-    def balance() {
+    Money balance() {
         assert entries != null
         entries.collect{it.amount}.sum()
     }
 
 
     def post() {
-        assert !posted
+        assert !isPosted()
         assert canPost()
         whenPosted=DateTime.now()
         entries.each { it.post() }
-        posted = true
         this
+    }
+
+    boolean isPosted() {
+        whenPosted != null
     }
 
     def inverse(aDate) {
