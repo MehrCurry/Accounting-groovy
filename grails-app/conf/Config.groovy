@@ -63,6 +63,8 @@ grails.exceptionresolver.params.exclude = ['password']
 grails.gorm.default.mapping = {
     "user-type" type: MoneyUserType, class:Money
     "user-type" type: CurrencyUserType, class:com.ibm.icu.util.Currency
+    "user-type" type: org.jadira.usertype.dateandtime.joda.PersistentDateTime, class: org.joda.time.DateTime
+    "user-type" type: org.jadira.usertype.dateandtime.joda.PersistentLocalDate, class: org.joda.time.LocalDate
 }
 
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
