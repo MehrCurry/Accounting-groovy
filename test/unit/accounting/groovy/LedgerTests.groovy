@@ -14,7 +14,16 @@ class LedgerTests {
     void testSomething() {
         def ledger=new Ledger()
 
-        def account=ledger.newAccount("a:b:c:d",DetailAccount.EUR)
-        assert account != null
+        def a1=ledger.newAccount("a:b:c:d",DetailAccount.EUR)
+        assert a1 != null
+
+        def a2=ledger.newAccount("a:b:c:e",DetailAccount.EUR)
+        assert a2 != null
+
+        assert a1.parent == a2.parent
+        assert a1.parent.accounts.size() == 2
+        assert a1.parent.accounts.contains(a2)
+        assert a2.parent.accounts.contains(a1)
+        assert ledger.accounts.size() == 5
     }
 }

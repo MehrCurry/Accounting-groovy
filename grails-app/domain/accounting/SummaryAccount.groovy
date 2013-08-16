@@ -1,8 +1,9 @@
 package accounting
 
-import com.ibm.icu.util.Currency as Currency
 import de.gzockoll.types.money.Money
+import groovy.transform.ToString
 
+@ToString
 class SummaryAccount extends Account {
     Set accounts = []
 
@@ -10,14 +11,12 @@ class SummaryAccount extends Account {
     static constraints = {
     }
 
-    SummaryAccount(String name,Currency currency) {
-        this.name=name
-        this.currency=currency
+    SummaryAccount(Ledger ledger,String name, Account parent = null) {
+        super(ledger,name,parent)
     }
 
     def addAccount(Account a) {
-        assert currency == a.currency
-        addToAccounts(a);
+        accounts << a;
     }
 
     Money balance() {

@@ -24,12 +24,14 @@ class CurrencyUserType extends AbstractImmutableType {
         return Currency.class
     }
 
+    @Override
     public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException {
         assert names.length == 1;
-        def iso = StringType.INSTANCE.get(names[0])
-        Currency.getInstance(iso); // already handles null check
+        def iso = StringType.INSTANCE.get(rs,names[0])
+        iso ? Currency.getInstance(iso) : null
     }
 
+    @Override
     public void nullSafeSet(PreparedStatement st, Object value, int index) throws SQLException {
         if (value == null) {
             StringType.INSTANCE.set(st, null, index);

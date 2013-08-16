@@ -1,8 +1,11 @@
 package accounting
 
 import de.gzockoll.types.money.Money
+import groovy.transform.PackageScope
+import groovy.transform.ToString
 import org.joda.time.DateTime
 
+@ToString
 class Posting {
     DateTime whenCreated=DateTime.now()
     DateTime whenPosted
@@ -10,9 +13,11 @@ class Posting {
 
     Set entries = []
 
+    static belongsTo = [ledger:Ledger]
     static hasMany = [entries:Entry]
     static constraints = {
         whenPosted nullable: true
+        ledger nullable: true
     }
 
     private add(Money amount, DetailAccount account, mode) {
@@ -38,8 +43,11 @@ class Posting {
         entries.collect{it.amount}.sum()
     }
 
-
     def post() {
+        ledger.post(this)
+    }
+
+    @PackageScope doPost() {
         assert !isPosted()
         assert canPost()
         entries.each { it.post() }
@@ -57,12 +65,12 @@ class Posting {
         trans;
     }
 
-    def credit(Money amount, DetailAccount account) {
+    def credit(Money amount, Account account) {
         add(amount,account,Entry.Mode.CREDIT)
         this
     }
 
-    def debit(Money amount, DetailAccount account) {
+    def debit(Money amount, Account account) {
         add(amount.negate(),account,Entry.Mode.DEBIT)
         this
     }
