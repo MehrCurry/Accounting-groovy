@@ -24,23 +24,28 @@ class PostingIntegrationTests extends GroovyTestCase {
 
     @Test
     void testSomething() {
-        def ledger=new Ledger()
-        def a1 = ledger.newAccount("DetailAccount 1", DetailAccount.EUR)
-        def a2 = ledger.newAccount("DetailAccount 2", DetailAccount.EUR)
-        def a3 = ledger.newAccount("DetailAccount 3", DetailAccount.EUR)
+        def ledger=Ledger.withName("testSomething")
+        def result=ledger.save()
+        def a1 = ledger.newAccount("group1:DetailAccount 1", DetailAccount.EUR)
+        def a2 = ledger.newAccount("group1:DetailAccount 2", DetailAccount.EUR)
+        def a3 = ledger.newAccount("group2:DetailAccount 3", DetailAccount.EUR)
         ledger.save()
 
         def posting = ledger.posting("JUNIT").credit(Money.euros(10), a1)
                 .credit(Money.euros(20), a2)
                 .debit(Money.euros(30), a3).post()
-        [a1, a2, a3, posting].each { it.save() }
+        // [a1, a2, a3, posting].each { it.save() }
 
-        assert Posting.findAll().size() >= 1
+        def group1=ledger.accountByname("group1")
+        def group2=ledger.accountByname("group2")
+        assert ledger.isBalanced()
+        assert group1.balance() == Money.euros(30)
+        assert group2.balance() == Money.euros(-30)
     }
 
     @Test
     void testDualCurrencyPosting() {
-        def ledger=new Ledger()
+        def ledger=Ledger.withName("testDualCurrencyPosting")
         def eur1 = ledger.newAccount("DetailAccount 1", EUR)
         def eur2 = ledger.newAccount("DetailAccount 2", EUR)
         def usd1 = ledger.newAccount("DetailAccount 3", USD)
@@ -68,7 +73,7 @@ class PostingIntegrationTests extends GroovyTestCase {
 
     @Test
     void testUnbalancedDualCurrencyPosting() {
-        def ledger=new Ledger()
+        def ledger=Ledger.withName("testUnbalancedDualCurrencyPosting")
         def eur1 = ledger.newAccount("DetailAccount 1", EUR)
         def eur2 = ledger.newAccount("DetailAccount 2", EUR)
         def usd1 = ledger.newAccount("DetailAccount 3", USD)
@@ -100,7 +105,7 @@ class PostingIntegrationTests extends GroovyTestCase {
 
     @Test
     public void testMulti(){
-        def ledger=new Ledger()
+        def ledger=Ledger.withName("testMulti")
         def eur1 = ledger.newAccount("multi:DetailAccount 1", EUR)
         def eur2 = ledger.newAccount("multi:DetailAccount 2", EUR)
         ledger.save()

@@ -14,8 +14,8 @@ class Ledger {
     static constraints = {
     }
 
-    Ledger(String name) {
-        this.name=name
+    static Ledger withName(String name) {
+        findOrCreateByName(name)
     }
 
     Account newAccount(String name, String isoCode) {
