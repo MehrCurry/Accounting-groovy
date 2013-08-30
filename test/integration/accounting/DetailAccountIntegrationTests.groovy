@@ -19,8 +19,9 @@ class DetailAccountIntegrationTests {
 
     @Test
     public void testAccount() {
-        def account=new DetailAccount(name:"JUNIT",currency: DetailAccount.EUR)
-        account.save()
-        assert DetailAccount.findAll().size() == 1
+        def ledger=new Ledger()
+        def account=ledger.newAccount("JUNIT","EUR")
+        ledger.save()
+        assert DetailAccount.find {name == "JUNIT"}
     }
 }

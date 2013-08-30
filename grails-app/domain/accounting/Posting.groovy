@@ -44,6 +44,7 @@ class Posting {
     }
 
     def post() {
+        assert ledger != null
         ledger.post(this)
     }
 

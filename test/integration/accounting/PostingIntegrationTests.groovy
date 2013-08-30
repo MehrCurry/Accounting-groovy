@@ -1,5 +1,4 @@
 package accounting
-
 import com.ibm.icu.util.Currency as Currency
 import de.gzockoll.types.money.Money
 import org.junit.After
@@ -25,14 +24,13 @@ class PostingIntegrationTests extends GroovyTestCase {
 
     @Test
     void testSomething() {
-        def a1 = new DetailAccount("DetailAccount 1", DetailAccount.EUR)
-        a1.save()
-        def a2 = new DetailAccount("DetailAccount 2", DetailAccount.EUR)
-        a2.save()
-        def a3 = new DetailAccount("DetailAccount 3", DetailAccount.EUR)
-        a3.save()
+        def ledger=new Ledger()
+        def a1 = ledger.newAccount("DetailAccount 1", DetailAccount.EUR)
+        def a2 = ledger.newAccount("DetailAccount 2", DetailAccount.EUR)
+        def a3 = ledger.newAccount("DetailAccount 3", DetailAccount.EUR)
+        ledger.save()
 
-        def posting = new Posting().credit(Money.euros(10), a1)
+        def posting = ledger.posting("JUNIT").credit(Money.euros(10), a1)
                 .credit(Money.euros(20), a2)
                 .debit(Money.euros(30), a3).post()
         [a1, a2, a3, posting].each { it.save() }
@@ -42,10 +40,11 @@ class PostingIntegrationTests extends GroovyTestCase {
 
     @Test
     void testDualCurrencyPosting() {
-        def eur1 = new DetailAccount("DetailAccount 1", EUR)
-        def eur2 = new DetailAccount("DetailAccount 2", EUR)
-        def usd1 = new DetailAccount("DetailAccount 3", USD)
-        def usd2 = new DetailAccount("DetailAccount 4", USD)
+        def ledger=new Ledger()
+        def eur1 = ledger.newAccount("DetailAccount 1", EUR)
+        def eur2 = ledger.newAccount("DetailAccount 2", EUR)
+        def usd1 = ledger.newAccount("DetailAccount 3", USD)
+        def usd2 = ledger.newAccount("DetailAccount 4", USD)
         [eur1,eur2,usd1,usd2].each { it.save() }
 
         def values = [10, 30, 2, 34, 1020]
@@ -61,18 +60,20 @@ class PostingIntegrationTests extends GroovyTestCase {
         postEur.debit(sum, eur2)
         postUsd.debit(currencyConverterService.convert(sum, USD), usd2)
 
-        postingService.post([postEur, postUsd])
+        postingService.post(postEur)
+        postingService.post(postUsd)
         assert postEur.isPosted()
         assert postUsd.isPosted()
     }
 
     @Test
     void testUnbalancedDualCurrencyPosting() {
-        def eur1 = new DetailAccount("DetailAccount 1", EUR)
-        def eur2 = new DetailAccount("DetailAccount 2", EUR)
-        def usd1 = new DetailAccount("DetailAccount 3", USD)
-        def usd2 = new DetailAccount("DetailAccount 4", USD)
-        [eur1,eur2,usd1,usd2].each { it.save() }
+        def ledger=new Ledger()
+        def eur1 = ledger.newAccount("DetailAccount 1", EUR)
+        def eur2 = ledger.newAccount("DetailAccount 2", EUR)
+        def usd1 = ledger.newAccount("DetailAccount 3", USD)
+        def usd2 = ledger.newAccount("DetailAccount 4", USD)
+        [ledger].each { it.save() }
 
         def values = [10, 30, 2, 34, 1020]
         def postEur = new Posting(memo: "TX #1 [EUR]")
@@ -95,5 +96,24 @@ class PostingIntegrationTests extends GroovyTestCase {
 
         assert !postEur.isPosted()
         assert !postUsd.isPosted()
+    }
+
+    @Test
+    public void testMulti(){
+        def ledger=new Ledger()
+        def eur1 = ledger.newAccount("multi:DetailAccount 1", EUR)
+        def eur2 = ledger.newAccount("multi:DetailAccount 2", EUR)
+        ledger.save()
+
+        def multi=ledger.accountByname("multi");
+        assert multi != null
+        assert multi.balance() == Money.euros(0)
+
+        // def duration= StopWatch.time {1000.times { ledger.posting(it.toString()).credit(Money.euros(it),eur1).debit(Money.euros(it),eur2).post()}}
+        def duration=postingService.multipost(ledger,eur1,eur2)
+        println duration
+        assert eur1.balance().amount() > 0G
+        assert multi.balance() == Money.euros(0)
+
     }
 }

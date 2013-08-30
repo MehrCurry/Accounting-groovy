@@ -1,6 +1,8 @@
 package accounting
 
 import de.gzockoll.types.money.Money
+import org.joda.time.DateTime
+
 /**
  * Created with IntelliJ IDEA.
  * User: Guido Zockoll
@@ -10,10 +12,12 @@ import de.gzockoll.types.money.Money
  */
 abstract class Account {
     String name
+    DateTime whenCreated=DateTime.now()
 
     static belongsTo = [ledger: Ledger,parent:Account]
 
     static constraints = {
+        name unique: true
         parent nullable: true
         ledger nullable: true
     }
@@ -26,6 +30,7 @@ abstract class Account {
 
     abstract void post(Entry entry)
     abstract Money balance()
+
     String canonicalName() {
         def cn=parent?.canonicalName()
         parent ? "$cn:$name" : name

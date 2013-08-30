@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 
         // runtime 'mysql:mysql-connector-java:5.1.22' ..
-        compile (group:'de.gzockoll', name: 'money', version:'[0.1.2-SNAPSHOT,)') { changing:true }
+        compile (group:'de.gzockoll', name: 'money', version:'[0.1.3-SNAPSHOT,)') { changing:true }
         compile 'com.ibm.icu:icu4j:51.2'
         compile "org.jadira.usertype:usertype.jodatime:1.9"
         compile 'org.apache.httpcomponents:httpclient:4.2.5'

@@ -1,12 +1,14 @@
 package accounting
 import de.gzockoll.types.money.Money
 import groovy.transform.ToString
+import org.joda.time.DateTime
 import persistance.MoneyUserType
 
 @ToString
 class Entry {
     Money amount
     Mode mode
+    DateTime whenCreated=DateTime.now()
 
     static belongsTo = [account:DetailAccount, posting:Posting]
 

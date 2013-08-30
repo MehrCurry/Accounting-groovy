@@ -1,7 +1,9 @@
 package accounting
 import com.ibm.icu.util.Currency as Currency
+import org.joda.time.DateTime
 
 class Ledger {
+    DateTime whenCreated=DateTime.now()
     Map<String,Account> accounts = [:]
     List<Posting> postings = []
     String name
@@ -14,6 +16,10 @@ class Ledger {
 
     Ledger(String name) {
         this.name=name
+    }
+
+    Account newAccount(String name, String isoCode) {
+        newAccount(name,Currency.getInstance(isoCode))
     }
 
     Account newAccount(String name, Currency currency) {
@@ -35,6 +41,9 @@ class Ledger {
         }
         lastAccount
     }
+    Account accountByname(String name) {
+        accounts.get(name)
+    }
 
     Posting posting(String memo) {
         new Posting(memo: memo,ledger: this)
@@ -45,5 +54,11 @@ class Ledger {
         postingService.post(posting)
         postings << posting
         posting
+    }
+
+    def boolean isBalanced() {
+        def detailAccounts = accounts.values().findAll { it instanceof DetailAccount }
+        def balances=detailAccounts.collect {it.balance()}.groupBy {it.currency}
+        balances.values().every { it.sum().amount() == 0}
     }
 }

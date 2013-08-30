@@ -21,7 +21,7 @@ environments {
     }
     test {
         dataSource {
-            dbCreate = "create-drop"
+            dbCreate = "update"
             //url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             url = "jdbc:h2:tcp://localhost/~/test"
             logSql = true
