@@ -17,7 +17,7 @@ class MoneyUserTypeTest extends GroovyTestCase {
     }
 
     void testSqlTypes() {
-        assert cut.sqlTypes().size() == 2
+        assert cut.getPropertyTypes().size() == 2
     }
 
     void testReturnedClass() {

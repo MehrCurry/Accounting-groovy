@@ -1,6 +1,5 @@
 package persistance
 
-import com.ibm.icu.util.Currency
 import org.hibernate.type.StringType
 
 import java.sql.PreparedStatement

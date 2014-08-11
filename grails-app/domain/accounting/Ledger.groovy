@@ -1,7 +1,9 @@
 package accounting
-import com.ibm.icu.util.Currency as Currency
+
+import groovy.transform.ToString
 import org.joda.time.DateTime
 
+@ToString
 class Ledger {
     DateTime whenCreated=DateTime.now()
     Map<String,Account> accounts = [:]

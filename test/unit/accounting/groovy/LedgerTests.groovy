@@ -1,6 +1,7 @@
 package accounting.groovy
 
 import accounting.DetailAccount
+import accounting.Ledger
 import accounting.SummaryAccount
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor

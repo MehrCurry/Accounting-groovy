@@ -9,7 +9,7 @@ import grails.test.mixin.TestFor
 @Mock([DetailAccount])
 class EntryTests {
 
-    public static final com.ibm.icu.util.Currency EUR = com.ibm.icu.util.Currency.getInstance("EUR")
+    public static final Currency EUR = Currency.getInstance("EUR")
 
     void testSomething() {
         def account=new DetailAccount("JUnit",EUR)

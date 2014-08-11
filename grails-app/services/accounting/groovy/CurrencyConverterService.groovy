@@ -1,6 +1,5 @@
 package accounting.groovy
 import com.google.gson.Gson
-import com.ibm.icu.util.Currency as Currency
 import de.gzockoll.types.money.Money
 import grails.plugin.cache.Cacheable
 import org.apache.http.client.HttpClient

@@ -10,7 +10,7 @@ import org.apache.commons.lang3.time.StopWatch
  */
 @TestFor(CurrencyConverterService)
 class CurrencyConverterServiceTests {
-    public static final com.ibm.icu.util.Currency USD = com.ibm.icu.util.Currency.getInstance("USD")
+    public static final Currency USD = Currency.getInstance("USD")
     CurrencyConverterService service
     void setUp() {
         service=new CurrencyConverterService()

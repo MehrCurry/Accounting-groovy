@@ -1,6 +1,5 @@
 package persistance
 
-import com.ibm.icu.util.Currency
 import de.gzockoll.types.money.Money
 import org.hibernate.HibernateException
 import org.hibernate.engine.SessionImplementor
