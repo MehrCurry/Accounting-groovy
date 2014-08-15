@@ -27,7 +27,7 @@ class Posting {
 
 
     boolean canPost() {
-        return hasEntries() && isBalanced()
+        return hasEntries() && isBalanced() && !isPosted()
     }
 
     boolean hasEntries() {
@@ -40,7 +40,8 @@ class Posting {
 
     Money balance() {
         assert entries != null
-        entries.collect{it.amount}.sum()
+        entries.find { it.mode == Entry.Mode.CREDIT}.collect{it.amount}.sum() -
+                entries.find { it.mode == Entry.Mode.DEBIT}.collect{it.amount}.sum()
     }
 
     def post() {
@@ -49,7 +50,6 @@ class Posting {
     }
 
     @PackageScope doPost() {
-        assert !isPosted()
         assert canPost()
         entries.each { it.post() }
         whenPosted=DateTime.now()
@@ -61,8 +61,8 @@ class Posting {
     }
 
     def inverse(aDate) {
-        def trans = new Posting(date:aDate,memo: "Storno: $memo")
-        entries.each { trans.add(it.amount.negate(),it.account,it.mode.negate()) }
+        def trans = ledger.posting(date:aDate,memo: "Storno: $memo")
+        entries.each { trans.add(it.amount,it.account,it.mode.negate()) }
         trans;
     }
 
@@ -72,7 +72,7 @@ class Posting {
     }
 
     def debit(Money amount, Account account) {
-        add(amount.negate(),account,Entry.Mode.DEBIT)
+        add(amount,account,Entry.Mode.DEBIT)
         this
     }
 }

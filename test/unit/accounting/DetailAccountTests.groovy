@@ -36,8 +36,4 @@ class DetailAccountTests {
         assert account.balance(Entry.Mode.CREDIT) == Money.euros(10)
         assert account.balance(Entry.Mode.DEBIT) == Money.euros(30)
     }
-
-    void testCurrencies() {
-        assert DetailAccount.currencies == []
-    }
 }

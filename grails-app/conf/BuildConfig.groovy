@@ -57,6 +57,7 @@ grails.project.dependency.resolution = {
         compile "org.jadira.usertype:usertype.jodatime:1.9.1"
         compile 'org.apache.httpcomponents:httpclient:4.2.5'
         compile 'com.google.code.gson:gson:2.2.4'
+        compile 'org.apache.commons:commons-lang3:3.3.2'
 
     }
 

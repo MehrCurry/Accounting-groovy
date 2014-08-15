@@ -51,8 +51,11 @@ class Ledger {
         new Posting(memo: memo,ledger: this)
     }
 
+    Posting posting(params) {
+        new Posting(params + [ledger: this])
+    }
+
     def post(Posting posting) {
-        assert posting.canPost()
         postingService.post(posting)
         postings << posting
         posting

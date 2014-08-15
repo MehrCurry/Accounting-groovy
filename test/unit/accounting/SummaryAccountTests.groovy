@@ -11,7 +11,7 @@ import grails.test.mixin.TestFor
 class SummaryAccountTests {
 
     void testSomething() {
-        def summary=new SummaryAccount("Summary",DetailAccount.EUR)
+        def summary=new SummaryAccount(null,"Summary",DetailAccount.EUR)
 
         def a1 = new DetailAccount("Hurz", DetailAccount.EUR)
         summary.addAccount(a1);

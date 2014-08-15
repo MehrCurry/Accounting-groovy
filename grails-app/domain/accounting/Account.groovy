@@ -15,6 +15,7 @@ abstract class Account {
     DateTime whenCreated=DateTime.now()
 
     static belongsTo = [ledger: Ledger,parent:Account]
+    static hasMany = [rules:PostingRule]
 
     static constraints = {
         name unique: true
@@ -34,5 +35,9 @@ abstract class Account {
     String canonicalName() {
         def cn=parent?.canonicalName()
         parent ? "$cn:$name" : name
+    }
+
+    def fireEagerRules(entry) {
+        rules.each { it.fireRule(this,entry) }
     }
 }

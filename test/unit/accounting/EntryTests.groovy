@@ -12,7 +12,7 @@ class EntryTests {
     public static final Currency EUR = Currency.getInstance("EUR")
 
     void testSomething() {
-        def account=new DetailAccount("JUnit",EUR)
+        def account=new DetailAccount(null,"JUnit",EUR)
         assert account.balance() == Money.euros(0)
 
         def entry=new Entry(account, Money.euros(10),new Posting())

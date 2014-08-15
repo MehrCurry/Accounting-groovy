@@ -9,6 +9,6 @@ import grails.test.mixin.TestFor
 class PostingServiceTests {
 
     void testSomething() {
-        fail "Implement me"
+
     }
 }

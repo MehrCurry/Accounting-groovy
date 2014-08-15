@@ -41,13 +41,13 @@ class CurrencyConverterService {
         rates.get(currencyTo) / rates.get(currencyFrom)
     }
 
-    @Cacheable(value='exchangerates',key="now")
+    @Cacheable(value='exchangerates')
     def getRates() {
         def url = "http://openexchangerates.org/api/latest.json?app_id=5e9f69fd45494652aff0fc7796f0d618"
         executeRequest(url)
     }
 
-    @Cacheable(value='exchangerates',key="#aDate")
+    @Cacheable(value='exchangerates')
     def getHistoricalRates(DateTime aDate) {
         def dateString = aDate.toString(dateFormatter)
         def url = "http://openexchangerates.org/api/historical/${dateString}.json?app_id=5e9f69fd45494652aff0fc7796f0d618"

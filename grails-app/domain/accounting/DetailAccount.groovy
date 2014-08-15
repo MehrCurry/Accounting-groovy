@@ -23,12 +23,14 @@ class DetailAccount extends Account {
         assert entry.amount.currency == currency
         this.validate()
         entries.add entry
+        fireEagerRules(entry)
     }
 
     Money balance() {
         this.validate()
         final zero = Money.fromMinor(0, currency)
-        entries.collect { it.amount }.sum(zero)
+        entries.find {it.mode == Entry.Mode.CREDIT}.collect { it.amount }.sum(zero) +
+            entries.find {it.mode == Entry.Mode.DEBIT}.collect { it.amount }.sum(zero).negate()
     }
 
     Money balance(Entry.Mode mode) {

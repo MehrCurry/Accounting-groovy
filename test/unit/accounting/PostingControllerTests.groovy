@@ -1,12 +1,6 @@
 package accounting
-
-
-
-import org.junit.*
-import grails.test.mixin.*
-
-@TestFor(PostingController)
-@Mock(Posting)
+// @TestFor(PostingController)
+// @Mock(Posting)
 class PostingControllerTests {
 
     def populateValidParams(params) {
