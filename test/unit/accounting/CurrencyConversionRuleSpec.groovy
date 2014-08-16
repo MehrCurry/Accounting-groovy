@@ -4,6 +4,7 @@ import accounting.groovy.CurrencyConverterService
 import de.gzockoll.types.money.Money
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
+import groovy.mock.interceptor.MockFor
 import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
@@ -24,7 +25,10 @@ class CurrencyConversionRuleSpec extends Specification {
         def yUSD=ledger.newAccount("Y in EUR", EUR)
         def accUSD=ledger.newAccount("Einnahmen in Dollar",USD)
         def accEUR=ledger.newAccount("Einnahmen in EUR",EUR)
-        xUSD.rule(new CurrencyConversionRule(targetAccountName: "Y in EUR",otherAccountName: "Einnahmen in EUR",ccs: new CurrencyConverterService()))
+        def context=new MockFor(CurrencyConverterService)
+        context.demand.convert { m,c -> Money.fromMinor(m.asMinor() * 0.75,c) }
+
+        xUSD.rule(new CurrencyConversionRule(targetAccountName: "Y in EUR",otherAccountName: "Einnahmen in EUR",ccs: context.proxyInstance()))
 
         when:
         ledger.posting("A Posting").credit(Money.fromMajor(10,USD),xUSD).debit(Money.fromMajor(10,USD),accUSD).post()
