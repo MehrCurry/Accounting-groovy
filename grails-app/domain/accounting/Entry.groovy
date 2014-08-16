@@ -40,6 +40,17 @@ class Entry {
     static enum Mode {
         CREDIT,DEBIT
 
+        def signedValueOf(Money m) {
+            switch (this) {
+                case CREDIT:
+                    m
+                    break
+                case DEBIT:
+                    m.negate()
+                    break
+            }
+        }
+
         def negate() {
             Mode.values()[1-this.ordinal()]
         }

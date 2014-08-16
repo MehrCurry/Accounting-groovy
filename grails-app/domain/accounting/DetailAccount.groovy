@@ -29,15 +29,13 @@ class DetailAccount extends Account {
     Money balance() {
         this.validate()
         final zero = Money.fromMinor(0, currency)
-        entries.find {it.mode == Entry.Mode.CREDIT}.collect { it.amount }.sum(zero) +
-            entries.find {it.mode == Entry.Mode.DEBIT}.collect { it.amount }.sum(zero).negate()
+        entries.collect{ it.mode.signedValueOf(it.amount)}.sum(zero)
     }
 
     Money balance(Entry.Mode mode) {
         this.validate()
         final zero = Money.fromMinor(0, currency)
-        def balance=entries.findAll { it.mode == mode}.collect {entry -> entry.amount }.sum(zero)
+        entries.findAll { it.mode == mode}.collect {entry -> entry.mode.signedValueOf(entry.amount) }.sum(zero)
 
-        mode == Entry.Mode.CREDIT ? balance : balance.negate()
     }
 }

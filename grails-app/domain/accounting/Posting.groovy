@@ -40,8 +40,7 @@ class Posting {
 
     Money balance() {
         assert entries != null
-        entries.find { it.mode == Entry.Mode.CREDIT}.collect{it.amount}.sum() -
-                entries.find { it.mode == Entry.Mode.DEBIT}.collect{it.amount}.sum()
+        entries.collect{ it.mode.signedValueOf(it.amount)}.sum()
     }
 
     def post() {
