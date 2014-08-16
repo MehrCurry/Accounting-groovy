@@ -37,7 +37,6 @@ class Ledger {
                 account = n.is(names.last()) ? new DetailAccount(this, n ,currency, lastAccount) : new SummaryAccount(this, n, lastAccount)
                 lastAccount?.addAccount(account)
                 accounts.put(account.canonicalName(),account)
-                account.save(failOnError: true)
             }
             lastAccount = account
         }
