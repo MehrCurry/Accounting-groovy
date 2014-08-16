@@ -13,6 +13,7 @@ import org.joda.time.DateTime
 abstract class Account {
     String name
     DateTime whenCreated=DateTime.now()
+    def rules=[]
 
     static belongsTo = [ledger: Ledger,parent:Account]
     static hasMany = [rules:PostingRule]
@@ -39,5 +40,9 @@ abstract class Account {
 
     def fireEagerRules(entry) {
         rules.each { it.fireRule(this,entry) }
+    }
+
+    def rule(PostingRule rule) {
+        rules.add(rule)
     }
 }

@@ -36,6 +36,21 @@ class DetailAccount extends Account {
         this.validate()
         final zero = Money.fromMinor(0, currency)
         entries.findAll { it.mode == mode}.collect {entry -> entry.mode.signedValueOf(entry.amount) }.sum(zero)
+    }
 
+    def printT() {
+        println name
+        println "Credit\t\t|\t\tDebit"
+        println "--------------------------"
+        entries.each {
+            if (it.mode == Entry.Mode.DEBIT)
+                print "\t\t\t|\t\t"
+            print it.amount
+            if (it.mode == Entry.Mode.CREDIT)
+                print "\t\t|"
+            println ""
+        }
+        println "=========================="
+        println balance()
     }
 }

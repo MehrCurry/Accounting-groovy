@@ -74,4 +74,9 @@ class Posting {
         add(amount,account,Entry.Mode.DEBIT)
         this
     }
+
+    def entry(Money amount, Account account, Entry.Mode mode) {
+        add(amount,account,mode)
+        this
+    }
 }
