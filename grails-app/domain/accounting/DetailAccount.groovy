@@ -6,6 +6,7 @@ import groovy.transform.ToString
 @ToString
 class DetailAccount extends Account {
     static final EUR=Currency.getInstance("EUR")
+    public static final String FORMAT = "| %-30s | %10s | %10s | %-40s |\n"
     Currency currency
     Set entries = []
 
@@ -40,17 +41,14 @@ class DetailAccount extends Account {
 
     def printT() {
         println name
-        println "Credit\t\t|\t\tDebit"
-        println "--------------------------"
-        entries.each {
-            if (it.mode == Entry.Mode.DEBIT)
-                print "\t\t\t|\t\t"
-            print it.amount
-            if (it.mode == Entry.Mode.CREDIT)
-                print "\t\t|\t\t"
-            println "\t\t\t\t$it.posting.whenPosted $it.posting.memo"
+        printf FORMAT,"Posted At","DEBIT","CREDIT","MEMO"
+        println '-' * 103
+        entries.each { Entry entry ->
+            String debit= entry.mode == Entry.Mode.DEBIT ? entry.amount : ""
+            String credit= entry.mode == Entry.Mode.CREDIT ? entry.amount : ""
+            printf FORMAT,entry.posting.whenPosted,debit,credit,entry.posting.memo
         }
-        println "=========================="
+        println '=' * 103
         println balance()
     }
 }

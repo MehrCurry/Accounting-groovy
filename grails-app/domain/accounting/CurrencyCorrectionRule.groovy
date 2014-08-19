@@ -1,8 +1,6 @@
 package accounting
 
-import accounting.groovy.CurrencyConverterService
 import de.gzockoll.types.money.Money
-
 /**
  * Created by guido on 17.08.14.
  */
@@ -10,7 +8,7 @@ class CurrencyCorrectionRule {
     String otherAccount
     String correctionAccountName
 
-    CurrencyConverterService currencyConverterService
+    def currencyConverterService
 
     def fire(Account account) {
         def ledger=account.ledger

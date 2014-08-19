@@ -32,7 +32,8 @@ class CurrencyCorrectionRuleSpec extends Specification {
         def ccs = Mock(CurrencyConverterService)
         ccs.convert(*_) >>> [Money.fromMinor(750, EUR), Money.fromMinor(749, EUR),Money.fromMinor(0, EUR)]
 
-        def rule = new CurrencyConversionRule(targetAccountName: "Y in EUR", otherAccountName: "Einnahmen in EUR", ccs: ccs)
+        def rule = new CurrencyConversionRule(targetAccountName: "Y in EUR", otherAccountName: "Einnahmen in EUR")
+        rule.currencyConverterService=ccs
         xUSD.rule(rule)
         ledger.posting("A Posting").credit(TEN_DOLLAR, xUSD).debit(TEN_DOLLAR, accUSD).post()
         ledger.posting("Another one").debit(TEN_DOLLAR, xUSD).credit(TEN_DOLLAR, accUSD).post()

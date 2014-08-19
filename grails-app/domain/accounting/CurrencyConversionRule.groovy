@@ -1,6 +1,5 @@
 package accounting
 
-import accounting.groovy.CurrencyConverterService
 import de.gzockoll.types.money.Money
 
 class CurrencyConversionRule extends PostingRule {
@@ -8,7 +7,7 @@ class CurrencyConversionRule extends PostingRule {
     String otherAccountName
 
 
-    CurrencyConverterService ccs;
+    def currencyConverterService;
 
     static constraints = {
     }
@@ -23,8 +22,8 @@ class CurrencyConversionRule extends PostingRule {
 
         Currency to=target.getCurrency()
 
-        Money converted=ccs.convert(entry.amount,to)
-        account.ledger.posting("Converted")
+        Money converted=currencyConverterService.convert(entry.amount,to)
+        account.ledger.posting("$entry.amount.currency -> $to: $entry.posting.memo")
                 .entry(converted,target,entry.mode)
                 .entry(converted,other,entry.mode.negate())
                 .post()
