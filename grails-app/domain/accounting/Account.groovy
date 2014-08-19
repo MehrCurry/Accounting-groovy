@@ -45,4 +45,8 @@ abstract class Account {
     def rule(PostingRule rule) {
         rules.add(rule)
     }
+
+    def fireRule(rule) {
+        rule.fire(this)
+    }
 }

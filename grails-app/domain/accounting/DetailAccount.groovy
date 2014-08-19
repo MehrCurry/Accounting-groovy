@@ -47,8 +47,8 @@ class DetailAccount extends Account {
                 print "\t\t\t|\t\t"
             print it.amount
             if (it.mode == Entry.Mode.CREDIT)
-                print "\t\t|"
-            println ""
+                print "\t\t|\t\t"
+            println "\t\t\t\t$it.posting.whenPosted $it.posting.memo"
         }
         println "=========================="
         println balance()
