@@ -27,4 +27,9 @@ class SummaryAccount extends Account {
     void post(Entry entry) {
         throw new UnsupportedOperationException("Write operations on summary accounts are unsupported!");
     }
+
+    def printT() {
+        println name
+        println balance()
+    }
 }

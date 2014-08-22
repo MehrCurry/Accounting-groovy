@@ -12,6 +12,8 @@ class DetailAccount extends Account {
 
     static hasMany = [entries:Entry]
 
+    static fetchMode = [entries: 'eager']
+
     static constraints = {
     }
 

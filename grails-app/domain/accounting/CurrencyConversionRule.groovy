@@ -23,7 +23,7 @@ class CurrencyConversionRule extends PostingRule {
         Currency to=target.getCurrency()
 
         Money converted=currencyConverterService.convert(entry.amount,to)
-        account.ledger.posting("$entry.amount.currency -> $to: $entry.posting.memo")
+        account.ledger.posting("$entry.amount.currency>$to: $entry.posting.memo")
                 .entry(converted,target,entry.mode)
                 .entry(converted,other,entry.mode.negate())
                 .post()

@@ -24,8 +24,6 @@ abstract class Account {
         ledger nullable: true
     }
 
-    static mapp
-
     Account(ledger, String name, Account parent=null) {
         this.ledger = ledger
         this.name = name
